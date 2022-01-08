@@ -29,28 +29,28 @@ function getword(info, tab) {
     }
   };
 
-//   getData().then((res) => {
-//     console.log(res["rephrased"])
-//     // window.open("popup.html", "extension_popup", "width=300,height=400,status=no,scrollbars=yes,resizable=no");
+  getData().then((res) => {
+    console.log(res["rephrased"])
+    // window.open("popup.html", "extension_popup", "width=300,height=400,status=no,scrollbars=yes,resizable=no");
 
 
-//     copyTextToClipboard(res["rephrased"])
+    copyTextToClipboard(res["rephrased"])
 
-//       // after copied to clipboard show popup of copied to clipboard
-//       chrome.tabs.create({
-//         url: chrome.extension.getURL('notify.html'),
-//         active: false
-//     }, function(tab) {
-//         // After the tab has been created, open a window to inject the tab
-//         chrome.windows.create({
-//             tabId: tab.id,
-//             type: 'popup',
-//             focused: true
-//         });
-//     });
+      // after copied to clipboard show popup of copied to clipboard
+      chrome.tabs.create({
+        url: chrome.extension.getURL('notify.html'),
+        active: false
+    }, function(tab) {
+        // After the tab has been created, open a window to inject the tab
+        chrome.windows.create({
+            tabId: tab.id,
+            type: 'popup',
+            focused: true
+        });
+    });
 
 
-// });
+});
 }
 
 chrome.contextMenus.create({
@@ -92,10 +92,7 @@ function copyTextToClipboard(text) {
   if (text) {
     (async _ => {
       await navigator.clipboard.writeText(text)
-    })().then(async () => {
-      let hi = await navigator.clipboard.writeText(text);
-      console.log(hi);
-    }, async () => {
+    })().then(navigator.clipboard.writeText(text), async () => {
       let hi = await navigator.clipboard.writeText(text);
       console.log(hi);
     })
