@@ -1,0 +1,20 @@
+{
+	"name": "EnglishNoKickLah",
+	"description": "A Google Chrome extension!",
+	"version": "1.0",
+	"manifest_version": 3,
+	"permissions": [
+		"contextMenus",
+		"notifications",
+		"storage"
+	],
+	"background": {
+	  "service_worker": "background.js"
+	},
+	"action": {
+	  "default_popup": "notify.html",
+	  "default_icon": {
+		"48": "/assets/icons/48.png"
+	  }
+	}
+}
