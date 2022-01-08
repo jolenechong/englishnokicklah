@@ -2,12 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Clickbait Classifier</title>
+    <title>AI Singlish to English</title>
 </head>
 <body>
+    <style>
+        *{padding:0;margin:0;}
+        body{background-color: rgb(46, 46, 46);color:white;display: flex;justify-content: center;align-items: center;height: 100vh;}
+#clickbaitText{
+    resize:vertical;
+    max-width:500px;
+    min-height:100px;
+    font-family: Calibri;
+    font-size: 1rem;
+}
+textarea{
+    outline: none;
+    padding: 5px;
+    font-family: Calibri;
+    font-size: 1rem;
+}
+input[type='submit']{
+    background-color: darkcyan;
+    color: white;
+    padding: 10px;
+    border: 0;
+    width: 100px;   
+}
+p{
+    font-family: Calibri;
+    font-size: 1rem;
+}
+    </style>
 <form action="/api" method="POST">
     <label for="ClickbaitText"></label>
-    <textarea name="clickbaitText" style="width:1000px;"></textarea>
+    <textarea name="clickbaitText" id="clickbaitText" style="width:1000px;"></textarea>
     <br>
     <input type="submit">
     <p>{{sentence}}</p>

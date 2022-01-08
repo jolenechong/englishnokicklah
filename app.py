@@ -1,8 +1,7 @@
 from flask import Flask, request,render_template, redirect, jsonify, Response
 import pandas as pd
 import numpy as np
-from config import API_TOKEN
-
+from flask_cors import CORS, cross_origin
 
 # from flask_restplus import Api
 # api = Api()
@@ -10,6 +9,8 @@ from config import API_TOKEN
 df = pd.read_csv('SinglishToEnglish.csv')
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 # api.init_app(app)
 
 import requests
@@ -19,27 +20,27 @@ import requests
 def tired():
     return redirect('/api')
 
+@cross_origin
 @app.route('/api',methods=['POST', 'GET'])
-@app.route('/api/<name>',methods=['POST', 'GET'])
-def home(name='hello'):
-    sent = name
+# @app.route('/api/<name>',methods=['POST', 'GET'])
+def home():
+    sent = 'Enter some text!'
     if request.method=='POST':
-        # sent = str(request.form['clickbaitText'])
-        sent = name
+        sent = str(request.form['clickbaitText'])
         no_punc = remove_punctuations(sent)
         no_singlish = singlish_to_english(no_punc)
         sentences = to_sent(no_singlish)
         sent = rephrase(sentences)
-        return Response({'rephrased': sent}, status=201, mimetype='application/json')
+        # return Response({'rephrased': sent}, status=201, mimetype='application/json')
 
     return render_template("index.html",sentence=sent)
 
-# @api.route()
-
-@app.route('/returnjson', methods = ['GET'])
-def ReturnJSON():
+# @app.route('/returnjson')
+@app.route('/returnjson/<name>', methods = ['GET'])
+def ReturnJSON(name='hello'):
     if(request.method == 'GET'):
-        sent = 'brb i need to check smth, btw the meeting tmr i need to come or nt ah'
+        sent = name
+        print(name)
         no_punc = remove_punctuations(sent)
         no_singlish = singlish_to_english(no_punc)
         sentences = to_sent(no_singlish)
@@ -136,7 +137,7 @@ def rephrase(final_sents):
     final = []
 
     API_URL = "https://api-inference.huggingface.co/models/tuner007/pegasus_paraphrase"
-    headers = {"Authorization": API_TOKEN}
+    headers = {"Authorization": "Bearer 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"}
 
     def query(payload):
         response = requests.post(API_URL, headers=headers, json=payload)
@@ -149,4 +150,4 @@ def rephrase(final_sents):
     return final
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
