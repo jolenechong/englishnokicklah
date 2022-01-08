@@ -29,28 +29,28 @@ function getword(info, tab) {
     }
   };
 
-  getData().then((res) => {
-    console.log(res["rephrased"])
-    // window.open("popup.html", "extension_popup", "width=300,height=400,status=no,scrollbars=yes,resizable=no");
+//   getData().then((res) => {
+//     console.log(res["rephrased"])
+//     // window.open("popup.html", "extension_popup", "width=300,height=400,status=no,scrollbars=yes,resizable=no");
 
 
-    copyTextToClipboard(res["rephrased"])
+//     copyTextToClipboard(res["rephrased"])
 
-      // after copied to clipboard show popup of copied to clipboard
-      chrome.tabs.create({
-        url: chrome.extension.getURL('notify.html'),
-        active: false
-    }, function(tab) {
-        // After the tab has been created, open a window to inject the tab
-        chrome.windows.create({
-            tabId: tab.id,
-            type: 'popup',
-            focused: true
-        });
-    });
+//       // after copied to clipboard show popup of copied to clipboard
+//       chrome.tabs.create({
+//         url: chrome.extension.getURL('notify.html'),
+//         active: false
+//     }, function(tab) {
+//         // After the tab has been created, open a window to inject the tab
+//         chrome.windows.create({
+//             tabId: tab.id,
+//             type: 'popup',
+//             focused: true
+//         });
+//     });
 
 
-});
+// });
 }
 
 chrome.contextMenus.create({
@@ -60,36 +60,46 @@ chrome.contextMenus.create({
 });
 chrome.contextMenus.onClicked.addListener(getword);
 
-function copyToClipboard(textToCopy) {
-  // navigator clipboard api needs a secure context (https)
-  if (navigator.clipboard && window.isSecureContext) {
-      // navigator clipboard api method'
-      return navigator.clipboard.writeText(textToCopy);
-  } else {
-      // text area method
-      let textArea = document.createElement("textarea");
-      textArea.value = textToCopy;
-      // make the textarea out of viewport
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      textArea.style.top = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      return new Promise((res, rej) => {
-          // here the magic happens
-          document.execCommand('copy') ? res() : rej();
-          textArea.remove();
-      });
-  }
-}
+// function copyToClipboard(textToCopy) {
+//   // navigator clipboard api needs a secure context (https)
+//   if (navigator.clipboard && window.isSecureContext) {
+//       // navigator clipboard api method'
+//       return navigator.clipboard.writeText(textToCopy);
+//   } else {
+//       // text area method
+//       let textArea = document.createElement("textarea");
+//       textArea.value = textToCopy;
+//       // make the textarea out of viewport
+//       textArea.style.position = "fixed";
+//       textArea.style.left = "-999999px";
+//       textArea.style.top = "-999999px";
+//       document.body.appendChild(textArea);
+//       textArea.focus();
+//       textArea.select();
+//       return new Promise((res, rej) => {
+//           // here the magic happens
+//           document.execCommand('copy') ? res() : rej();
+//           textArea.remove();
+//       });
+//   }
+// }
 
 
 function copyTextToClipboard(text) {
   console.log("hi");
   console.log(text);
-  text[0].execCommand("copy");
-
+  // text[0].execCommand("copy");
+  if (text) {
+    (async _ => {
+      await navigator.clipboard.writeText(text)
+    })().then(async () => {
+      let hi = await navigator.clipboard.writeText(text);
+      console.log(hi);
+    }, async () => {
+      let hi = await navigator.clipboard.writeText(text);
+      console.log(hi);
+    })
+  }
   //Execute command
   // if (text){
   //   navigator.clipboard.writeText(text);

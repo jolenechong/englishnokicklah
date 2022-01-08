@@ -1,46 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>AI Singlish to English</title>
-</head>
-<body>
+  </head>
+  <body>
     <style>
-        *{padding:0;margin:0;}
-        body{background-color: rgb(46, 46, 46);color:white;display: flex;justify-content: center;align-items: center;height: 100vh;}
-#clickbaitText{
-    resize:vertical;
-    max-width:500px;
-    min-height:100px;
-    font-family: Calibri;
-    font-size: 1rem;
-}
-textarea{
-    outline: none;
-    padding: 5px;
-    font-family: Calibri;
-    font-size: 1rem;
-}
-input[type='submit']{
-    background-color: darkcyan;
-    color: white;
-    padding: 10px;
-    border: 0;
-    width: 100px;   
-}
-p{
-    font-family: Calibri;
-    font-size: 1rem;
-}
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background-color: rgb(46, 46, 46);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #clickbaitText {
+        resize: vertical;
+        max-width: 500px;
+        min-height: 100px;
+        font-family: Calibri;
+        font-size: 1rem;
+      }
+      textarea {
+        outline: none;
+        padding: 5px;
+        font-family: Calibri;
+        font-size: 1rem;
+      }
+      input[type="submit"] {
+        background-color: rgb(94, 191, 191);
+        color: white;
+        padding: 10px;
+        border: 0;
+        width: 100px;
+        font-size: 1rem;
+        border-radius: 5px;
+      }
+      input[type="submit"]:hover {
+          background-color: darkcyan;
+          transition: 400ms;
+      }
+      p {
+        font-family: Calibri;
+        font-size: 1rem;
+        padding: 10px;
+      }
+      h1{
+        font-family: Calibri;
+      }
     </style>
-<form action="/api" method="POST">
-    <label for="ClickbaitText"></label>
-    <textarea name="clickbaitText" id="clickbaitText" style="width:1000px;"></textarea>
-    <br>
-    <input type="submit">
-    <p>{{sentence}}</p>
-
-</form>
-
-</body>
+    <div style="text-align: center;">
+    <h1>Singlish To English</h1>
+    <p>EnglishNoKickLah</p>
+    <form action="/api" method="POST">
+      <label for="ClickbaitText"></label>
+      <textarea
+        name="clickbaitText"
+        id="clickbaitText"
+        style="width: 1000px"
+      ></textarea>
+      <br />
+      <input type="submit" />
+      <p>
+      {% for sent in sentence %}
+      {{sent}}
+      {% endfor %}
+    </p>
+    </form>
+</div>
+  </body>
 </html>
