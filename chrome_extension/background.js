@@ -34,7 +34,7 @@ function getword(info, tab) {
     // window.open("popup.html", "extension_popup", "width=300,height=400,status=no,scrollbars=yes,resizable=no");
 
 
-    copyToClipboard(res["rephrased"])
+    copyTextToClipboard(res["rephrased"])
 
       // after copied to clipboard show popup of copied to clipboard
       chrome.tabs.create({
